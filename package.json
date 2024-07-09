@@ -1,0 +1,29 @@
+{
+  "name": "youtubeclone",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehdnd/YouTubeClone.git"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node index.js"
+  },
+  "keywords": [
+    "nomadcoders"
+  ],
+  "author": "ehdnd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehdnd/YouTubeClone/issues"
+  },
+  "homepage": "https://github.com/ehdnd/YouTubeClone#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/node": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "nodemon": "^3.1.4"
+  }
+}
