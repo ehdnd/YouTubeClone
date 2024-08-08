@@ -12,7 +12,7 @@ let videos = [
     rating: 5,
     comments: 2,
     createdAt: "2 min ago",
-    views: 190,
+    views: 1,
     id: 2,
   },
   {
@@ -32,7 +32,7 @@ export const search = (req, res) => res.send("Search");
 export const see = (req, res) => {
   const { id } = req.params;
   const video = videos[id - 1];
-  return res.render("watch", {pageTitle: `Watching ${video.title}`});
+  return res.render("watch", {pageTitle: `Watching ${video.title}`, video});
 };
 export const edit = (req, res) => res.render("edit");
 export const upload = (req, res) => res.send("Upload");
