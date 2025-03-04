@@ -145,5 +145,77 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 
+export const startKakaoLogin = (req, res) => {
+  const baseUrl = "https://kauth.kakao.com/oauth/authorize";
+  const config = {
+    client_id: process.env.KK_CLIENT,
+    redirect_uri: "http://localhost:4000/users/kakao/finish",
+    response_type: "code",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  return res.redirect(finalUrl);
+};
+
+export const finishKakaoLogin = async (req, res) => {
+  const baseUrl = "https://kauth.kakao.com/oauth/token";
+  const config = {
+    grant_type: "authorization_code",
+    client_id: process.env.KK_CLIENT,
+    redirect_uri: "http://localhost:4000/users/kakao/finish",
+    code: req.query.code,
+    client_secret: process.env.KK_SECRET,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  const tokenRequest = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+  ).json();
+
+  if ("access_token" in tokenRequest) {
+    const { access_token } = tokenRequest;
+    const userData = await (
+      await fetch("https://kapi.kakao.com/v2/user/me", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+        // body: new URLSearchParams({
+        //   property_keys: JSON.stringify([
+        //     "kakao_account.profile",
+        //     "kakao_account.name",
+        //   ]),
+        // }),
+      })
+    ).json();
+    console.log(userData);
+
+    if (!userData.kakao_account.has_email) return res.redirect("/login");
+    const email = userData.kakao_account.email;
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        name: userData.kakao_account.profile.nickname,
+        username: userData.kakao_account.profile.nickname,
+        email,
+        password: "",
+        avatarUrl: userData.kakao_account.profile.profile_image_url,
+        socialOnly: true,
+      });
+    }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
+  } else {
+    return res.redirect("/login");
+  }
+};
+
 export const edit = (req, res) => res.send("Edit User");
 export const see = (req, res) => res.send("See User");
