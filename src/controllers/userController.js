@@ -41,6 +41,7 @@ export const postJoin = async (req, res) => {
 };
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
+
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
@@ -156,6 +157,27 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
+
+  const currentUser = await User.findById(_id);
+
+  if (currentUser.email !== email) {
+    const userExists = await User.exists({ email });
+    if (userExists) {
+      return res.status(400).render("edit-profile", {
+        errorMessage: "Email Exists",
+      });
+    }
+  }
+
+  if (currentUser.username !== username) {
+    const userExists = await User.exists({ username });
+    if (userExists) {
+      return res.status(400).render("edit-profile", {
+        errorMessage: "Username Exists",
+      });
+    }
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
