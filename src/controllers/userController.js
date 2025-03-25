@@ -201,6 +201,7 @@ export const postChangePassword = async (req, res) => {
       errorMessage: "The password does not match the confirmation",
     });
   }
+  user.password = newPassword;
   await user.save();
   return res.redirect("/users/logout");
 };
