@@ -34,6 +34,7 @@
     "@babel/node": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "@prettier/plugin-pug": "^3.0.0",
+    "babel-loader": "^10.0.0",
     "nodemon": "^3.1.4",
     "prettier": "3.3.3",
     "webpack": "^5.98.0",
