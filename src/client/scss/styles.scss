@@ -1,11 +1,16 @@
 // Config
-@use "./config/_variables.scss" as *;
-@use "./config/_reset.scss" as *;
+@use "./config/_variables" as *;
+@use "./config/_reset" as *;
 
 // Components
-@use "./components/header.scss" as *;
+@use "./components/header" as *;
+@use "./components/footer" as *;
+@use "./components/video" as *;
+@use "./components/shared" as *;
 
 // Screens
+@use "./screens/home" as *;
+@use "./screens/serach" as *;
 
 // Defaults
 a {
@@ -18,4 +23,11 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: $bg;
   color: white;
+}
+
+main {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
 }

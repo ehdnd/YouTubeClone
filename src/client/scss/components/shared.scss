@@ -1,0 +1,12 @@
+// Config
+@use "../config/" as *;
+
+.empty__messagea {
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+.video-grid {
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
