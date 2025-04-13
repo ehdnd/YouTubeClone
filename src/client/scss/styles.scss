@@ -7,10 +7,14 @@
 @use "./components/footer" as *;
 @use "./components/video" as *;
 @use "./components/shared" as *;
+@use "./components/form" as *;
+@use "./components/social-login" as *;
 
 // Screens
 @use "./screens/home" as *;
 @use "./screens/serach" as *;
+@use "./screens/profile" as *;
+@use "./screens/edit-profile" as *;
 
 // Defaults
 a {
